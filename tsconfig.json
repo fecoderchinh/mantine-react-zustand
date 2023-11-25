@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext", "es2015.iterable"],
+    "module": "es2020",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
+    /* Bundler mode */
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@tests": [
+        "./tests"
+      ],
+      "*": ["./node_modules/*"]
+    }
+  },
+  "types": ["node", "ts-jest", "@testing-library/jest-dom", "jsdom", "vite/client",],
+  "typeRoots": ["./node_modules/@types", "src/global.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "tests/**/*.tsx", 
+    "src/**/*.js",
+    "jest.setup.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "vitest/**/*"
+  ]
+}

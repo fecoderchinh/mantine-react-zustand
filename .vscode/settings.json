@@ -1,0 +1,31 @@
+{
+    "editor.codeActionsOnSave": {
+        // For ESLint
+        "source.fixAll.eslint": true,
+        // For TSLint
+        "source.fixAll.tslint": true,
+        // For Stylelint
+        "source.fixAll.stylelint": true,
+        "source.organizeImports": false
+    },
+    // "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "files.associations": {
+        "*.css": "tailwindcss",
+        "*.svg": "html"
+    },
+    // Unknown At Rules ingore to fix Unknown at rule @tailwindcss(unknownAtRules)
+    "css.lint.unknownAtRules": "ignore",
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "cSpell.words": [
+        "classname",
+        "commitlint",
+        "immer",
+        "svgr",
+        "tailwindcss",
+        "tanstack",
+        "zustand"
+    ],
+    "editor.tabSize": 3
+}

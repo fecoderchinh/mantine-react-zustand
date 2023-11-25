@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Welcome component has correct Vite guide link 1`] = `
+<div>
+  <style
+    data-mantine-styles="classes"
+  >
+    @media (max-width: 35.99375em) {.mantine-visible-from-xs {display: none !important;}}@media (min-width: 36em) {.mantine-hidden-from-xs {display: none !important;}}@media (max-width: 47.99375em) {.mantine-visible-from-sm {display: none !important;}}@media (min-width: 48em) {.mantine-hidden-from-sm {display: none !important;}}@media (max-width: 61.99375em) {.mantine-visible-from-md {display: none !important;}}@media (min-width: 62em) {.mantine-hidden-from-md {display: none !important;}}@media (max-width: 74.99375em) {.mantine-visible-from-lg {display: none !important;}}@media (min-width: 75em) {.mantine-hidden-from-lg {display: none !important;}}@media (max-width: 87.99375em) {.mantine-visible-from-xl {display: none !important;}}@media (min-width: 88em) {.mantine-hidden-from-xl {display: none !important;}}
+  </style>
+  <h1
+    class="title m-8a5d1357 mantine-Title-root"
+    data-order="1"
+    style="--title-fw: var(--mantine-h1-font-weight); --title-lh: var(--mantine-h1-line-height); --title-fz: var(--mantine-h1-font-size); text-align: center;"
+  >
+    Welcome to
+     
+    <span
+      class="mantine-focus-auto m-b6d8b162 mantine-Text-root"
+      data-inherit="true"
+      data-variant="gradient"
+      style="--text-gradient: linear-gradient(45deg, var(--mantine-color-pink-filled) 0%, var(--mantine-color-yellow-filled) 100%);"
+    >
+      Mantine
+    </span>
+  </h1>
+  <p
+    class="mantine-focus-auto m-b6d8b162 mantine-Text-root"
+    color="dimmed"
+    data-size="lg"
+    style="--text-fz: var(--mantine-font-size-lg); --text-lh: var(--mantine-line-height-lg); --text-color: dimmed; margin-right: auto; margin-left: auto; text-align: center; max-width: calc(36.25rem * var(--mantine-scale));"
+  >
+    This starter Vite project includes a minimal setup, if you want to learn more on Mantine + Vite integration follow
+     
+    <a
+      class="mantine-focus-auto m-849cf0da m-b6d8b162 mantine-Text-root mantine-Anchor-root"
+      data-size="lg"
+      data-underline="hover"
+      href="https://mantine.dev/guides/vite/"
+      style="--text-fz: var(--mantine-font-size-lg); --text-lh: var(--mantine-line-height-lg);"
+    >
+      this guide
+    </a>
+    . To get started edit pages/Home.page.tsx file.
+  </p>
+</div>
+`;
