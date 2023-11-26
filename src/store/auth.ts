@@ -1,25 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { authAPI } from '@/services/auth'
+import type { AccessInterface, TokenInterface, UserInterface } from '@/types/auth'
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
-const getUser = () => {
-   return new Promise<{ name: string; email: string }>((resolve) => {
-      setTimeout(() => {
-         const user = {
-            name: 'John Doe',
-            email: 'john.d@domain.com',
-         }
-
-         resolve(user)
-      }, 1000)
-   })
+interface AuthPayloadInterface {
+   authState?: {
+      user?: UserInterface;
+      token?: TokenInterface;
+      access?: AccessInterface;
+   } | undefined;
+   isAuthenticated?: boolean;
+   error?: any;
 }
 
 interface AuthState {
    isAuthenticated: boolean
-   name: string
-   email: string
-   login: () => Promise<{ isAuthenticated: boolean }>
-   logout: () => void
+   authState?: AuthPayloadInterface | undefined,
+   error?: any
+   login: (username:string, password: string) => Promise<AuthPayloadInterface | undefined>
+   logout: () => Promise<{isAuthenticated: boolean}>
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -27,24 +27,54 @@ export const useAuthStore = create<AuthState>()(
       persist(
          (set) => ({
             isAuthenticated: false,
-            name: '',
-            email: '',
-            login: async () => {
-               const user: { name: string; email: string } = await getUser()
+            authState: undefined,
+            error: null,
+            login: async (username: string, password: string): Promise<AuthPayloadInterface | undefined> => {
+               try {
+                  const res = await authAPI.login({ username, password });
+            
+                  if (res) {            
+                     const result = {
+                        isAuthenticated: true,
+                        authState: res.data.payload,
+                        error: undefined
+                     };
 
-               set({
-                  isAuthenticated: true,
-                  ...user,
-               })
+                     set({
+                        isAuthenticated: result.isAuthenticated,
+                        authState: result.authState,
+                        error: result.error
+                     })
+            
+                     return result;
+                  }
+               } catch (error) {
+                  const result = {
+                     isAuthenticated: false,
+                     authState: undefined,
+                     error
+                  };
 
-               return { isAuthenticated: true }
+                  set({
+                     isAuthenticated: result.isAuthenticated,
+                     authState: result.authState,
+                     error: result.error
+                  })
+            
+                  return result;
+               }
+            
+               // If there's no result, return undefined
+               return undefined;
             },
-            logout: () => {
+            logout: async () => {
+               await authAPI.logout();
                set({
                   isAuthenticated: false,
-                  name: '',
-                  email: '',
+                  authState: undefined,
+                  error: undefined
                })
+               return {isAuthenticated: false}
             },
          }),
          {
