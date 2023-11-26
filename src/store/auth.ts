@@ -28,7 +28,7 @@ export const useAuthStore = create<AuthState>()(
          (set) => ({
             isAuthenticated: false,
             authState: undefined,
-            error: null,
+            error: undefined,
             login: async (username: string, password: string): Promise<AuthPayloadInterface | undefined> => {
                try {
                   const res = await authAPI.login({ username, password });

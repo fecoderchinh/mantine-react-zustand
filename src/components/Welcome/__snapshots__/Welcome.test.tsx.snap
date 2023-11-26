@@ -42,5 +42,8 @@ exports[`Welcome component has correct Vite guide link 1`] = `
     </a>
     . To get started edit pages/Home.page.tsx file.
   </p>
+  <button>
+    Log out
+  </button>
 </div>
 `;

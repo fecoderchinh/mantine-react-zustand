@@ -1,49 +1,115 @@
-import { render } from '@tests'
+import { render, userEvent, waitFor } from '@tests'
 import { AuthenticationForm } from './Authentication'
+import { useAuthStore } from '@/store/auth'
+import * as router from 'react-router-dom'
+import { notifications } from '@mantine/notifications'
+
+beforeEach(() => {
+   expect(router)
+})
+
+const mockedNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+   ...jest.requireActual('react-router-dom'),
+   useNavigate: () => mockedNavigate
+}))
+
+jest.mock('@mantine/notifications', () => ({
+   ...jest.requireActual('@mantine/notifications'),
+   notifications: {
+      show: jest.fn(),
+   },
+}))
 
 describe('AuthenticationForm component', () => {
    it('renders "Login" divider when type is "login"', () => {
       render(<AuthenticationForm />)
-      // expect(getByRole('divider', { name: 'Login' })).toBeInTheDocument()
    })
 
-   // it('renders "Register" divider when type is "register"', () => {
-   //   const { getByRole } = render(<AuthenticationForm type='register' />)
-   //   expect(getByRole('divider', { name: 'Register' })).toBeInTheDocument()
-   // })
+   it('toggles between login and register states', async () => {
+      const { queryByText, getByText } = render(<AuthenticationForm />);
+      const switchToRegister = queryByText('Don\'t have an account? Register');
+      expect(switchToRegister).toBeInTheDocument();
 
-   // it('renders "Name" input when type is "register"', () => {
-   //   const { getByLabelText } = render(<AuthenticationForm type='register' />)
-   //   expect(getByLabelText('Name')).toBeInTheDocument()
-   // })
+      if (switchToRegister) {
+         await userEvent.click(switchToRegister);
+         expect(getByText('Already have an account? Login')).toBeInTheDocument();
+      }
 
-   // it('does not render "Name" input when type is "login"', () => {
-   //   const { queryByLabelText } = render(<AuthenticationForm />)
-   //   expect(queryByLabelText('Name')).toBeNull()
-   // })
+      const switchToLogin = queryByText('Already have an account? Login');
+      expect(switchToLogin).toBeInTheDocument();
 
-   // it('renders "Email" input', () => {
-   //   const { getByLabelText } = render(<AuthenticationForm />)
-   //   expect(getByLabelText('Email')).toBeInTheDocument()
-   // })
+      if (switchToLogin) {
+         await userEvent.click(switchToLogin);
+         expect(getByText('Don\'t have an account? Register')).toBeInTheDocument();
+      }
+   })
 
-   // it('renders "Password" input', () => {
-   //   const { getByLabelText } = render(<AuthenticationForm />)
-   //   expect(getByLabelText('Password')).toBeInTheDocument()
-   // })
+   it('handles login submission', async () => {
+      const loginMock = jest.fn().mockResolvedValue({ isAuthenticated: true });
+      useAuthStore.setState({login: loginMock, isAuthenticated: true});
 
-   // it('renders "Terms and Conditions" checkbox when type is "register"', () => {
-   //   const { getByLabelText } = render(<AuthenticationForm type='register' />)
-   //   expect(getByLabelText('I accept terms and conditions', {exact: false})).toBeInTheDocument()
-   // })
+      const { getByPlaceholderText } = render(<AuthenticationForm />);
 
-   // it('does not render "Terms and Conditions" checkbox when type is "login"', () => {
-   //   const { queryByLabelText } = render(<AuthenticationForm />)
-   //   expect(queryByLabelText('I accept terms and conditions')).toBeNull()
-   // })
+      await userEvent.type(getByPlaceholderText('hello@mantine.dev'), 'test@example.com');
+      await userEvent.type(getByPlaceholderText('Your password'), 'password');
 
-   // it('renders "Login" button when type is "register"', () => {
-   //   const { getByRole } = render(<AuthenticationForm type='register' />)
-   //   expect(getByRole('button', { name: 'Login' })).toBeInTheDocument()
-   // })
+      const loginButton = document.querySelector('.mantine-Button-label');
+      expect(loginButton).toBeInTheDocument();
+
+      if (loginButton) {
+         await userEvent.click(loginButton);
+      }
+
+      await waitFor(() => {
+         expect(loginMock).toHaveBeenCalledWith('test@example.com', 'password');
+      });
+   })
+
+   it('navigates to welcome page after successful login', async () => {
+      const loginMock = jest.fn().mockResolvedValue({ isAuthenticated: true });
+      useAuthStore.setState({login: loginMock, isAuthenticated: true});
+
+      const { getByPlaceholderText } = render(<AuthenticationForm />);
+
+      await userEvent.type(getByPlaceholderText('hello@mantine.dev'), 'test@example.com');
+      await userEvent.type(getByPlaceholderText('Your password'), 'password');
+
+      const loginButton = document.querySelector('.mantine-Button-label');
+      expect(loginButton).toBeInTheDocument();
+
+      if (loginButton) {
+         await userEvent.click(loginButton);
+      }
+
+      await waitFor(() => {
+         expect(mockedNavigate).toHaveBeenCalledWith('/welcome');
+      });
+   })
+
+   it('displays error notification on login failure', async () => {
+      const loginMock = jest.fn().mockResolvedValue({ isAuthenticated: false, error: {message: 'Invalid credentials'} });
+      useAuthStore.setState({login: loginMock, isAuthenticated: false });
+
+      const { getByPlaceholderText } = render(<AuthenticationForm />);
+
+      await userEvent.type(getByPlaceholderText('hello@mantine.dev'), 'test@example.com');
+      await userEvent.type(getByPlaceholderText('Your password'), 'password');
+
+      const loginButton = document.querySelector('.mantine-Button-label');
+      expect(loginButton).toBeInTheDocument();
+
+      if (loginButton) {
+         await userEvent.click(loginButton);
+      }
+
+      await waitFor(() => {
+         expect(notifications.show).toHaveBeenCalledWith({
+            color: 'red',
+            message: 'Invalid credentials',
+            title: 'Error occurred'
+         });
+      });
+   })
 })
