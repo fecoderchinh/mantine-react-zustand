@@ -10,7 +10,7 @@ export const Welcome = () => {
    const navigate = useNavigate()
 
    const handleLogout = async () => {
-      await authState.logout().then(res => {
+      await authState.logout().then((res) => {
          if (!res.isAuthenticated) {
             notifications.show({
                title: 'Sign out success!',

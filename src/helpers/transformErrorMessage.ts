@@ -16,9 +16,9 @@ export function getFirstErrorFromResponse(error: any) {
 }
 
 export function getResponseError(error: {
-  response: { data: { errors: any; message: any }; status: any; headers: any }
-  message: any
-  config: { url: any }
+   response: { data: { errors: any; message: any }; status: any; headers: any }
+   message: any
+   config: { url: any }
 }) {
    const errorMessage = 'API Error, please try again.'
    if (typeof error !== 'object') {
@@ -27,16 +27,16 @@ export function getResponseError(error: {
 
    if (
       hasOwnProperty(error, 'response') &&
-    hasOwnProperty(error.response, 'data') &&
-    hasOwnProperty(error.response.data, 'errors')
+      hasOwnProperty(error.response, 'data') &&
+      hasOwnProperty(error.response.data, 'errors')
    ) {
       return error.response.data.errors
    }
 
    if (
       hasOwnProperty(error, 'response') &&
-    hasOwnProperty(error.response, 'data') &&
-    hasOwnProperty(error.response.data, 'message')
+      hasOwnProperty(error.response, 'data') &&
+      hasOwnProperty(error.response.data, 'message')
    ) {
       return error.response.data.message
    }

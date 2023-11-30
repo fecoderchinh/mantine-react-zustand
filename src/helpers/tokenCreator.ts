@@ -5,7 +5,7 @@ export const getHeaderInfo = async () => {
       headers: {
          'Content-Type': 'application/json',
          Authorization: `Bearer ${token}`,
-      // 'Cache-Control': 'max-age=31536000'
+         // 'Cache-Control': 'max-age=31536000'
       },
    }
 }
@@ -16,7 +16,7 @@ export const getFormDataHeader = async () => {
       headers: {
          'Content-Type': 'multipart/form-data',
          Authorization: `Bearer ${token}`,
-      // 'Cache-Control': 'max-age=31536000'
+         // 'Cache-Control': 'max-age=31536000'
       },
    }
 }

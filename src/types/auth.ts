@@ -1,10 +1,10 @@
 enum UserStatus {
    'active',
-   'blocked'
+   'blocked',
 }
 
 enum TokenType {
-   'Bearer'
+   'Bearer',
 }
 
 export interface UserInterface {
@@ -27,7 +27,7 @@ export interface TokenInterface {
 }
 
 export interface RoleInterface {
-   name: string,
+   name: string
    permissions: string[]
 }
 

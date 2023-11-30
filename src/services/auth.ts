@@ -12,5 +12,5 @@ const logout = async () => {
 
 export const authAPI = {
    login,
-   logout
+   logout,
 }

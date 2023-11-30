@@ -1,6 +1,17 @@
 import { useToggle, upperFirst } from '@mantine/hooks'
 import { useForm } from '@mantine/form'
-import { TextInput, PasswordInput, Paper, Group, Button, Divider, Checkbox, Anchor, Stack, type PaperProps } from '@mantine/core'
+import {
+   TextInput,
+   PasswordInput,
+   Paper,
+   Group,
+   Button,
+   Divider,
+   Checkbox,
+   Anchor,
+   Stack,
+   type PaperProps,
+} from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth'
@@ -32,24 +43,22 @@ export const AuthenticationForm = (props: AuthenticationFormProps) => {
    const navigate = useNavigate()
 
    const handleLogin = async (_formData: { email: string; password: string }) => {
-      await auth.login(_formData.email, _formData.password)
-         .then((res) => {
-            if (res?.isAuthenticated) {
-               notifications.show({
-                  title: 'Success',
-                  message: 'Login successfully!',
-                  color: 'green',
-               })
-               navigate('/welcome')
-            } else {
-               notifications.show({
-                  title: 'Error occurred',
-                  message: getResponseError(res?.error),
-                  color: 'red',
-               })
-            }
-
-         })
+      await auth.login(_formData.email, _formData.password).then((res) => {
+         if (res?.isAuthenticated) {
+            notifications.show({
+               title: 'Success',
+               message: 'Login successfully!',
+               color: 'green',
+            })
+            navigate('/welcome')
+         } else {
+            notifications.show({
+               title: 'Error occurred',
+               message: getResponseError(res?.error),
+               color: 'red',
+            })
+         }
+      })
    }
 
    return (

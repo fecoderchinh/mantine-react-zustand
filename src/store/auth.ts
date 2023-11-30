@@ -5,21 +5,23 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 
 interface AuthPayloadInterface {
-   authState?: {
-      user?: UserInterface;
-      token?: TokenInterface;
-      access?: AccessInterface;
-   } | undefined;
-   isAuthenticated?: boolean;
-   error?: any;
+   authState?:
+      | {
+           user?: UserInterface
+           token?: TokenInterface
+           access?: AccessInterface
+        }
+      | undefined
+   isAuthenticated?: boolean
+   error?: any
 }
 
 interface AuthState {
    isAuthenticated: boolean
-   authState?: AuthPayloadInterface | undefined,
+   authState?: AuthPayloadInterface | undefined
    error?: any
-   login: (username:string, password: string) => Promise<AuthPayloadInterface | undefined>
-   logout: () => Promise<{isAuthenticated: boolean}>
+   login: (username: string, password: string) => Promise<AuthPayloadInterface | undefined>
+   logout: () => Promise<{ isAuthenticated: boolean }>
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -31,50 +33,50 @@ export const useAuthStore = create<AuthState>()(
             error: undefined,
             login: async (username: string, password: string): Promise<AuthPayloadInterface | undefined> => {
                try {
-                  const res = await authAPI.login({ username, password });
-            
-                  if (res) {            
+                  const res = await authAPI.login({ username, password })
+
+                  if (res) {
                      const result = {
                         isAuthenticated: true,
                         authState: res.data.payload,
-                        error: undefined
-                     };
+                        error: undefined,
+                     }
 
                      set({
                         isAuthenticated: result.isAuthenticated,
                         authState: result.authState,
-                        error: result.error
+                        error: result.error,
                      })
-            
-                     return result;
+
+                     return result
                   }
                } catch (error) {
                   const result = {
                      isAuthenticated: false,
                      authState: undefined,
-                     error
-                  };
+                     error,
+                  }
 
                   set({
                      isAuthenticated: result.isAuthenticated,
                      authState: result.authState,
-                     error: result.error
+                     error: result.error,
                   })
-            
-                  return result;
+
+                  return result
                }
-            
+
                // If there's no result, return undefined
-               return undefined;
+               return undefined
             },
             logout: async () => {
-               await authAPI.logout();
+               await authAPI.logout()
                set({
                   isAuthenticated: false,
                   authState: undefined,
-                  error: undefined
+                  error: undefined,
                })
-               return {isAuthenticated: false}
+               return { isAuthenticated: false }
             },
          }),
          {
