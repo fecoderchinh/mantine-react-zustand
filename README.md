@@ -7,23 +7,23 @@
 # CÁC THAO TÁC QUAN TRỌNG
 
 1. Cài thư viện
-```
+```sh
 pnpm i
 ```
 2. Chạy development mode
-```
+```sh
 pnpm dev
 ```
 3. Build source code
-```
+```sh
 pnpm build
 ```
 4. Test dự án
-```
+```sh
 pnpm test
 ```
 5. Fix lỗi format code
-```
+```sh
 pnpm prettier:write
 ```
 
@@ -35,7 +35,7 @@ pnpm prettier:write
 4. Gọi API từ server trong `/src/services/`, đọc ví dụ `/src/services/auth.ts`
 5. Xử lý service trong `/src/store/`, đọc ví dụ `/src/store/auth.ts`
 6. Gọi dispatch trong reactjs như ví dụ bên dưới:
-```
+```js
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth'
 import { getResponseError } from '@/helpers/transformErrorMessage'
@@ -62,7 +62,7 @@ const handleLogin = async (_formData: { email: string; password: string }) => {
 }
 ```
 7. Lấy data đã dispatch như ví dụ bên dưới:
-```
+```js
 import { useAuthStore } from '@/store/auth'
 
 console.log(auth)
