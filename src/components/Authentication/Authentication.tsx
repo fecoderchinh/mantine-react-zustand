@@ -16,10 +16,12 @@ import {
 import { useForm } from '@mantine/form'
 import { upperFirst, useToggle } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
+import { useTranslation, withTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 export const AuthenticationForm = () => {
    const auth = useAuthStore()
+   const { t } = useTranslation();
 
    const [type, toggle] = useToggle(['login', 'register'])
 
@@ -61,12 +63,12 @@ export const AuthenticationForm = () => {
    return (
       <Container size={420} my={40}>
          <Title ta="center" c="white">
-            Login
+            {t('label.login')}
          </Title>
          <Text c="white" size="sm" ta="center" mt={5}>
-            Do not have an account yet?{' '}
+            {t('desc.doNotHaveAccount')}{' '}
             <Anchor size="sm" component="button" c="white">
-               Create account
+               {t('action.createAccount')}
             </Anchor>
          </Text>
 
@@ -143,4 +145,4 @@ export const AuthenticationForm = () => {
    )
 }
 
-export default AuthenticationForm
+export default withTranslation()(AuthenticationForm)

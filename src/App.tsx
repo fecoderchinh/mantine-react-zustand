@@ -7,6 +7,7 @@ import '@/index.css'
 import React, { Suspense } from 'react'
 import { BrowserRouter, useRoutes } from 'react-router-dom'
 import mainRoutes from '@/routes/main'
+import '@/i18n';
 
 export const App = () => {
    const element = useRoutes(mainRoutes)
