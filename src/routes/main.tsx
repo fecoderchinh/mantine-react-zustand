@@ -1,3 +1,4 @@
+import BoxLayout from '@/layouts/BoxLayout'
 import { lazy } from 'react'
 
 const PageHome = lazy(() => import('@/pages/Home/Home'))
@@ -21,11 +22,11 @@ const mainRoutes = [
    },
    {
       path: '/login',
-      element: <PageLogin />,
+      element: <BoxLayout><PageLogin /></BoxLayout>,
    },
    {
       path: '/*',
-      element: <PageNotFound />,
+      element: <BoxLayout><PageNotFound /></BoxLayout>,
    },
 ]
 
