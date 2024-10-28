@@ -1,4 +1,4 @@
-import { lazy } from 'react'
+import { lazy } from 'react';
 
 const AuthenticationForm = lazy(() => import('@/components/Authentication/Authentication'))
 

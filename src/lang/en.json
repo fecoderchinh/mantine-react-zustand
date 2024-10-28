@@ -1,0 +1,11 @@
+{
+   "label": {
+      "login": "Login"
+   },
+   "desc": {
+      "doNotHaveAccount": "Do not have an account yet?"
+   },
+   "action": {
+      "createAccount": "Create account"
+   }
+}
