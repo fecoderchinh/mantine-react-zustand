@@ -1,0 +1,6 @@
+{
+   "routes": {
+      "welcome": "welcome",
+      "login": "login"
+   }
+}

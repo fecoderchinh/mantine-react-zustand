@@ -1,16 +1,17 @@
-import '@mantine/core/styles.css'
-import '@mantine/notifications/styles.css'
-import { LoadingOverlay, MantineProvider } from '@mantine/core'
-import { Notifications } from '@mantine/notifications'
-import { theme } from '@/theme'
+import '@/i18n'
 import '@/index.css'
+import useTranslatedRoutes from '@/routes/main'
+import { theme } from '@/theme'
+import { LoadingOverlay, MantineProvider } from '@mantine/core'
+import '@mantine/core/styles.css'
+import { Notifications } from '@mantine/notifications'
+import '@mantine/notifications/styles.css'
 import React, { Suspense } from 'react'
 import { BrowserRouter, useRoutes } from 'react-router-dom'
-import mainRoutes from '@/routes/main'
-import '@/i18n';
 
 export const App = () => {
-   const element = useRoutes(mainRoutes)
+   const routes = useTranslatedRoutes();
+   const element = useRoutes(routes)
 
    return (
       <MantineProvider theme={theme}>
